@@ -21,5 +21,5 @@ function deepParametersCount(object, paramName = "responseBody") {
       counter++;
     }
   }
-  console.log(counter + " parameter(s) in '" + paramName + "' object");
+  console.log("expect(objectParametersCount(" + paramName + ")).toBe(" + counter + ");");
 }
