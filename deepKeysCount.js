@@ -1,4 +1,4 @@
-function deepParametersCount(object, paramName = "responseBody") {
+function deepParametersCount(object, paramName = "body") {
   let params = Object.keys(object);
   let counter = 0;
 
@@ -9,7 +9,14 @@ function deepParametersCount(object, paramName = "responseBody") {
       !Array.isArray(object[params[i]])
     ) {
       counter++;
-      deepParametersCount(object[params[i]], paramName + "." + params[i]);
+      if (parseInt(params[i]) >= 0) {
+        deepParametersCount(
+          object[params[i]],
+          paramName + "[" + params[i] + "]"
+        );
+      } else {
+        deepParametersCount(object[params[i]], paramName + "." + params[i]);
+      }
     } else if (
       Array.isArray(object[params[i]]) &&
       object[params[i]].length > 0 &&
@@ -21,5 +28,8 @@ function deepParametersCount(object, paramName = "responseBody") {
       counter++;
     }
   }
-  console.log("expect(objectParametersCount(" + paramName + ")).toBe(" + counter + ");");
+
+  console.log(
+    "expect(objectParametersCount(" + paramName + ")).toBe(" + counter + ");"
+  );
 }
